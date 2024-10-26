@@ -2,19 +2,25 @@ import "./App.css";
 import side from "./img/side.png";
 import dark from "./img/dark.svg";
 import man from "./img/man.jpg";
-import Invodata from "./Invodata"
+import Invodata from "./Invodata";
 import inbg from "./img/inbg.svg";
 import From from "./From";
+import Fromin from "./Fromin";
 import Input from "./Inputs";
 import { useState } from "react";
 
-function App() {
+function App(props) {
   const [open, setOpen] = useState(false);
-  
+  const [showFromIn, setShowFromIn] = useState(false);
+
+  const handleSaveClick = () => {
+    setShowFromIn(true);
+  };
+
   const openForm = () => {
     setOpen(!open);
   };
-   
+
   return (
     <>
       <section className="container">
@@ -49,7 +55,11 @@ function App() {
               </div>
             </nav>
           </div>
-          <div className="absolute z-10">{ true === open && <From /> } </div>
+          <div className="absolute z-10">
+            {true === open && (
+              <From handleSaveClick={handleSaveClick} setOpen={setOpen} />
+            )}{" "}
+          </div>
           <div className="container relative z-0 flex flex-col  pl-28 justify-center">
             <div className="flex flex-row p-20 justify-between">
               <div>
@@ -62,8 +72,10 @@ function App() {
                 <div className="">
                   <Input />
                 </div>
-                <button onClick={openForm}
-                 className="inline-flex items-center p-2 text-center justify-between w-50 h-14 bg-indigo-600 rounded-full">
+                <button
+                  onClick={openForm}
+                  className="inline-flex items-center p-2 text-center justify-between w-50 h-14 bg-indigo-600 rounded-full"
+                >
                   <div className="bg-white text-indigo-600 flex items-center text-center justify-center p-1 mr-4 font-bold rounded-full">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +83,8 @@ function App() {
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
                       stroke="currentColor"
-                      class="size-8">
+                      class="size-8"
+                    >
                       <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
@@ -83,18 +96,23 @@ function App() {
                 </button>
               </div>
             </div>
-            <div className="flex flex-col items-center pt-4 justify-center">
-             <img src={inbg} width={300} height={300} className=""></img>
-              <h1 className="text-base font-bold">There is nothing here</h1>
-              <p className="text-center text-gray-300 text-xs pt-1">
-                Create an invoice by clicking the New <br></br>
-                Invoice button and get started
-              </p>
+            <div className="ml-64">
+              {showFromIn ? (
+                <Fromin />
+              ) : (
+                <div className="flex flex-col items-center pt-4 justify-center">
+                  <img src={inbg} width={300} height={300} className=""></img>
+                  <h1 className="text-base font-bold">There is nothing here</h1>
+                  <p className="text-center text-gray-300 text-xs pt-1">
+                    Create an invoice by clicking the New <br></br>
+                    Invoice button and get started
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </section>
-       
     </>
   );
 }
