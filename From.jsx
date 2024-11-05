@@ -1,38 +1,44 @@
 import { useState, useEffect } from "react";
 import Add from "./Add";
-import { useStore, useTodos } from "./Data";
+import { useStore, useTodos  } from "./Data.js";
 
 function Form(props) {
   const { formData, setFormData } = useStore();
   const { list, setList } = useTodos();
   const [open, setOpen] = useState([]);
   const [showlist, setShowlist] = useState();
-
+  const [deleteAlart,setDeleteAlart]= useState();
   const openAdd = () => {
     setOpen([...open, {}]);
   };
 
+
+
+
+   const handleSaveType = () =>{
+    props.handleShowDraft("Save");
+   }
+
+   const handleDraftType = () =>{
+    props.handleShowDraft("Draft");
+   }
+
+   
   const openDelete = (key) => {
     const openDeleteArray = open.filter((_, i) => i !== key);
     setOpen(openDeleteArray);
   };
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
+  
   const saveToLocalStorage = () => {
     localStorage.setItem("formData", JSON.stringify(formData));
     alert("Form data saved to local storage!");
   };
 
-  useEffect(() => {
-    const savedFormData = localStorage.getItem("formData");
-    if (savedFormData) {
-      setFormData(JSON.parse(savedFormData));
-    }
-  }, [setFormData]);
+  
   return (
     <>
       <section>
@@ -139,16 +145,35 @@ function Form(props) {
                 + Add new Item
               </button>
               <div className="flex flex-row items-center pt-4 justify-between">
-                <button className="text-gray-800 font-semibold bg-gray-300 ml-16 w-32 h-12 rounded-full">
+                <button onClick={() => { props.setOpen(false);}} className="text-gray-800 font-semibold bg-gray-300 ml-16 w-32 h-12 rounded-full">
                   Discord
                 </button>
+                
                 <div>
-                  <button className="bg-gray-800 font-semibold text-white w-32 h-12 mr-2 rounded-full">
+                  <button
+                  type="draft"
+                    onClick={() => {                    
+                      props.handleShowInvo();
+                      props.setOpen(false);
+                      setList([...list, formData]);
+                      setFormData({
+                        address: "",
+                        city: "",
+                        code: "",
+                        country: "",
+                        date: "",
+                        name: "",
+                        email: "",
+                        type:"Draft",
+                      });
+                    }}
+                    className="bg-gray-800 font-semibold text-white w-32 h-12 mr-2 rounded-full "
+                               
+>
                     Save as Draft
                   </button>
-                  <button
+                  <button type="Save"
                     onClick={() => {
-                      props.handleSaveClick();
                       props.setOpen(false);
                       saveToLocalStorage();
                       setList([...list, formData]);
@@ -160,6 +185,8 @@ function Form(props) {
                         date: "",
                         name: "",
                         email: "",
+                        type:"Save",
+                       
                       });
                     }}
                     className="bg-indigo-700 font-semibold text-white w-32 h-12 rounded-full"
