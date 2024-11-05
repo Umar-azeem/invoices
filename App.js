@@ -5,59 +5,77 @@ import man from "./img/man.jpg";
 import Invodata from "./Invodata";
 import inbg from "./img/inbg.svg";
 import From from "./From";
-import Fromin from "./Fromin";
 import Input from "./Inputs";
 import { useState } from "react";
-
+import { useTodos } from "./Data";
+import { Link } from "react-router-dom";
 function App(props) {
   const [open, setOpen] = useState(false);
+  const { list } = useTodos();
   const [showFromIn, setShowFromIn] = useState(false);
+  const [showInvo, setShowInvo] = useState(false);
 
   const handleSaveClick = () => {
-    setShowFromIn(true);
+    setShowFromIn(!showFromIn);
   };
 
+
+  const handleShowInvo = () => {
+    setShowInvo(!showInvo);
+  };
+  
+  true === showInvo && <Invodata />
   const openForm = () => {
     setOpen(!open);
   };
 
-  return (
+
+  return(
     <>
       <section className="container">
         <div className="container flex  flex-row ">
           <div className="absolute z-20">
-            <nav className="container">
-              <div className="bg-slate-700 w-auto h-auto flex flex-col rounded-tr-3xl justify-between">  
-                <img
-                  src={side}
-                  width={120}
-                  height={120}
-                  className="mb-10"
-                ></img>
-                <div className="flex justify-center mt-80">
-                  <button>
-                    <img
-                      src={dark}
-                      width={25}
-                      height={25}
-                      className="mb-5"
-                    ></img>
-                  </button>
+            <Link to="/">
+              {" "}
+              <nav className="container">
+                <div className="bg-slate-700 w-auto h-auto flex flex-col rounded-tr-3xl justify-between">
+                  <img
+                    src={side}
+                    width={120}
+                    height={120}
+                    className="mb-10"
+                  ></img>
+                  <div className="flex justify-center mt-80">
+                    <button>
+                      <img
+                        src={dark}
+                        width={25}
+                        height={25}
+                        className="mb-5"
+                      ></img>
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div className="bg-slate-700 flex justify-center rounded-br-3xl mt-[1px]">
-                <img
-                  src={man}
-                  width={30}
-                  height={30}
-                  className="rounded-full m-[31px]"
-                ></img>
-              </div>
-            </nav>
+                <div className="bg-slate-700 flex justify-center rounded-br-3xl mt-[1px]">
+                  <img
+                    src={man}
+                    width={30}
+                    height={30}
+                    className="rounded-full m-[31px]"
+                  ></img>
+                </div>
+              </nav>
+            </Link>
           </div>
           <div className="absolute z-10">
-            {true === open && (
-              <From handleSaveClick={handleSaveClick} setOpen={setOpen} />
+           {true === open && (
+              <From
+              
+                openForm={openForm}
+                handleSaveClick={handleSaveClick}
+                setOpen={setOpen}
+                handleShowInvo={handleShowInvo}
+              />
             )}{" "}
           </div>
           <div className="container relative z-0 flex flex-col  pl-28 justify-center">
@@ -97,24 +115,27 @@ function App(props) {
               </div>
             </div>
             <div className="ml-64">
-              {showFromIn ? (
-               <Invodata />
+              {list.length !== 0 ? (
+                <Invodata  />
               ) : (
-                <div className="flex flex-col items-center pt-4 justify-center">
-                  <img src={inbg} width={300} height={300} className=""></img>
-                  <h1 className="text-base font-bold">There is nothing here</h1>
-                  <p className="text-center text-gray-300 text-xs pt-1">
-                    Create an invoice by clicking the New <br></br>
-                    Invoice button and get started
-                  </p>
-                </div>
+                  <div className="flex flex-col items-center pt-4 justify-center">
+                    <img src={inbg} width={300} height={300} className=""></img>
+                    <h1 className="text-base font-bold">
+                      There is nothing here
+                    </h1>
+                    <p className="text-center text-gray-300 text-xs pt-1">
+                      Create an invoice by clicking the New <br></br>
+                      Invoice button and get started
+                    </p>
+                  </div>
+                 
               )}
             </div>
           </div>
         </div>
       </section>
     </>
-  );
+  )
 }
 
 export default App;
