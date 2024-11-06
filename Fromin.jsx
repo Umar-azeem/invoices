@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTodos } from "./Data.js";
+import { useTodos } from "./useTodos.js";
 import { useNavigate, useParams } from "react-router-dom";
 import side from "./img/side.png";
 import dark from "./img/dark.svg";
@@ -10,9 +10,18 @@ function Fromin() {
   const [back, setback] = useState(false);
   const [deleteAlart, setDeleteAlart] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [markPaid,setMarkpaid ] = useState();
+ 
+  const handleChangeStatus = () => {
+    setMarkpaid(!markPaid);
+    if (markPaid) {
+      setListUpdate("Paid");
+    }
+  };
+
 
   const handleDeleteAlart = () => {
-    setDeleteAlart(!deleteAlart);
+    setDeleteAlart(deleteAlart);
   };
 
   const navigate = useNavigate();
@@ -67,7 +76,7 @@ function Fromin() {
             <div className="flex text-center items-center">
               <p className="text-white p-4 font-semibold">Status</p>
               <p className="bg-gray-950 font-semibold text-white w-32 flex justify-center text-center items-center h-12 rounded-md">
-              {filteredData?.type}
+              {markPaid ? "Paid" : filteredData?.type}
               </p>
             </div>
             <div className="ml-20">
@@ -87,8 +96,8 @@ function Fromin() {
                   />
                 </div>
               </button>
-              <button className="bg-indigo-700 font-semibold text-sm text-white w-32 h-12 ml-2 rounded-full">
-                Save & send
+              <button onClick={handleChangeStatus}  className="bg-indigo-700 font-semibold text-sm text-white w-32 h-12 ml-2 rounded-full">
+                Save & Paid
               </button>
             </div>
           </div>
