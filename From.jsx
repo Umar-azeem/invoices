@@ -1,29 +1,32 @@
 import { useState, useEffect } from "react";
-import Add from "./Add";
-import { useStore, useTodos  } from "./Data.js";
+import Add from "./Add.jsx";
+import { useStore } from "./useStore.js";
+import { useTodos } from "./useTodos.js";
+import toast, { Toaster } from 'react-hot-toast';
 
 function Form(props) {
   const { formData, setFormData } = useStore();
   const { list, setList } = useTodos();
   const [open, setOpen] = useState([]);
   const [showlist, setShowlist] = useState();
-  const [deleteAlart,setDeleteAlart]= useState();
+  const [deleteAlart, setDeleteAlart] = useState();
   const openAdd = () => {
     setOpen([...open, {}]);
   };
 
 
+       
+ 
 
 
-   const handleSaveType = () =>{
+  const handleSaveType = () => {
     props.handleShowDraft("Save");
-   }
+  };
 
-   const handleDraftType = () =>{
+  const handleDraftType = () => {
     props.handleShowDraft("Draft");
-   }
+  };
 
-   
   const openDelete = (key) => {
     const openDeleteArray = open.filter((_, i) => i !== key);
     setOpen(openDeleteArray);
@@ -32,20 +35,45 @@ function Form(props) {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  
+
   const saveToLocalStorage = () => {
     localStorage.setItem("formData", JSON.stringify(formData));
-    alert("Form data saved to local storage!");
+    toast('Save data to the localStorage.');
+
   };
 
   
+
   return (
     <>
       <section>
         <div className="container w-fit h-screen overflow-y-auto bg-gray-900 rounded-lg">
           <div className="ml-28 mr-4">
             <div className="container p-4">
-              <h1 className="text-indigo-600 w-20 font-semibold">Bill From</h1>
+              <div className="flex justify-between">
+                <h1 className="text-indigo-600 w-20 font-semibold">
+                  Bill From
+                </h1>
+               <button onClick={() => {
+                    props.setOpen(false);
+                  }} ><svg
+                  class="w-6 h-6 text-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18 17.94 6M18 18 6.06 6"
+                  />
+                </svg></button> 
+              </div>
               <p className="text-gray-500 mb-2 font-semibold">Street Address</p>
               <input
                 type="text"
@@ -145,18 +173,23 @@ function Form(props) {
                 + Add new Item
               </button>
               <div className="flex flex-row items-center pt-4 justify-between">
-                <button onClick={() => { props.setOpen(false);}} className="text-gray-800 font-semibold bg-gray-300 ml-16 w-32 h-12 rounded-full">
+                <button
+                  onClick={() => {
+                    props.setOpen(false);
+                  }}
+                  className="text-gray-800 font-semibold bg-gray-300 ml-16 w-32 h-12 rounded-full"
+                >
                   Discord
                 </button>
-                
+
                 <div>
                   <button
-                  type="draft"
-                    onClick={() => {                    
+                    onClick={() => {
                       props.handleShowInvo();
                       props.setOpen(false);
-                      setList([...list, formData]);
+                      setList([...list, {...formData,type: "Draft"}]);
                       setFormData({
+                        id:0,
                         address: "",
                         city: "",
                         code: "",
@@ -164,20 +197,20 @@ function Form(props) {
                         date: "",
                         name: "",
                         email: "",
-                        type:"Draft",
+                        type: "Draft",
                       });
                     }}
                     className="bg-gray-800 font-semibold text-white w-32 h-12 mr-2 rounded-full "
-                               
->
+                  >
                     Save as Draft
                   </button>
-                  <button type="Save"
+                  <button
                     onClick={() => {
                       props.setOpen(false);
                       saveToLocalStorage();
-                      setList([...list, formData]);
+                      setList([...list, {...formData,type:'Save'}]);
                       setFormData({
+                        id:0,
                         address: "",
                         city: "",
                         code: "",
@@ -185,13 +218,12 @@ function Form(props) {
                         date: "",
                         name: "",
                         email: "",
-                        type:"Save",
-                       
+                        type: "Save",
                       });
                     }}
                     className="bg-indigo-700 font-semibold text-white w-32 h-12 rounded-full"
                   >
-                    Save & Send
+                    Save & Paid
                   </button>
                 </div>
               </div>
