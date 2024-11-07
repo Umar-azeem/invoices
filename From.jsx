@@ -3,22 +3,16 @@ import Add from "./Add.jsx";
 import { useStore } from "./useStore.js";
 import { useTodos } from "./useTodos.js";
 import toast, { Toaster } from 'react-hot-toast';
-
 function Form(props) {
   const { formData, setFormData } = useStore();
   const { list, setList } = useTodos();
   const [open, setOpen] = useState([]);
   const [showlist, setShowlist] = useState();
   const [deleteAlart, setDeleteAlart] = useState();
+
   const openAdd = () => {
     setOpen([...open, {}]);
   };
-
-
-       
- 
-
-
   const handleSaveType = () => {
     props.handleShowDraft("Save");
   };
