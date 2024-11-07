@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTodos } from "./useTodos.js";
+import { useEidt } from "./useEidt.js";
 import { useNavigate, useParams } from "react-router-dom";
 import side from "./img/side.png";
 import dark from "./img/dark.svg";
 import man from "./img/man.jpg";
 import Alart from "./Alart.jsx";
+import Newfrom from "./Newfrom.jsx";
 function Fromin() {
   const { list, setListUpdate } = useTodos();
   const [back, setback] = useState(false);
   const [deleteAlart, setDeleteAlart] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [markPaid,setMarkpaid ] = useState();
+  const { isEdit, handleEidt } = useEidt();
  
   const handleChangeStatus = () => {
     setMarkpaid(!markPaid);
@@ -36,6 +39,10 @@ function Fromin() {
   const handleCloseAlert = () => {
     setShowAlert(false);
   };
+
+  
+ 
+
   const params = useParams();
   const id = params.id;
   const filteredData = list.find((v) => v.id === Number(id));
@@ -43,8 +50,9 @@ function Fromin() {
   return (
     <>
       {" "}
+     {true === isEdit &&  <div className="absolute z-20"><Newfrom /></div>}
       <div className="absolute z-20">
-        <nav className="container">
+      <nav className="container">
           <div className="bg-slate-700 w-auto h-auto flex flex-col rounded-tr-3xl justify-between">
             <img src={side} width={120} height={120} className="mb-10"></img>
             <div className="flex justify-center mt-80">
@@ -61,7 +69,7 @@ function Fromin() {
               className="rounded-full m-[31px]"
             ></img>
           </div>
-        </nav>
+      </nav>
       </div>
       <section className=" flex flex-col items-center w-screen justify-center">
         <button
@@ -80,8 +88,8 @@ function Fromin() {
               </p>
             </div>
             <div className="ml-20">
-              <button className="text-gray-800 font-semibold text-sm bg-white w-28 h-11 rounded-full">
-                Discord
+              <button onClick={handleEidt} className="text-gray-800 font-semibold text-sm bg-white w-28 h-11 rounded-full">
+                Eidt
               </button>
               <button
                 onClick={handleDeleteAlart}
