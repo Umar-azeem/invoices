@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import Add from "./Add.jsx";
 import { useStore } from "./useStore.js";
 import { useTodos } from "./useTodos.js";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
+
 function Form(props) {
   const { formData, setFormData } = useStore();
   const { list, setList } = useTodos();
@@ -31,42 +32,42 @@ function Form(props) {
   };
 
   const saveToLocalStorage = () => {
-    localStorage.setItem("formData", JSON.stringify(formData));
-    toast('Save data to the localStorage.');
-
+    toast("Save data to the zustand.");
   };
-
-  
 
   return (
     <>
       <section>
         <div className="container w-fit h-screen overflow-y-auto bg-gray-900 rounded-lg">
-          <div className="ml-28 mr-4">
-            <div className="container p-4">
+          <div className=" md:ml-28 mr-4">
+            <div className="container p-1 lg:p-4">
               <div className="flex justify-between">
-                <h1 className="text-indigo-600 w-20 font-semibold">
+                <h1 className="text-indigo-600 w-full font-semibold">
                   Bill From
                 </h1>
-               <button onClick={() => {
+                <button
+                  onClick={() => {
                     props.setOpen(false);
-                  }} ><svg
-                  class="w-6 h-6 text-800 dark:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
+                  }}
                 >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M6 18 17.94 6M18 18 6.06 6"
-                  />
-                </svg></button> 
+                  <svg
+                    class="md:w-4 h-4 w-6 md:h-6 text-800 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18 17.94 6M18 18 6.06 6"
+                    />
+                  </svg>
+                </button>
               </div>
               <p className="text-gray-500 mb-2 font-semibold">Street Address</p>
               <input
@@ -75,10 +76,10 @@ function Form(props) {
                 name="address"
                 placeholder="Street Address"
                 onChange={handleInputChange}
-                className="bg-gray-800 text-sm rounded-md w-[615px] h-10 p-4"
+                className="bg-gray-800 text-sm rounded-md w-full  md:h-10 p-1 lg:p-4"
               />{" "}
               {props.zulfi}
-              <div className="container flex flex-row mt-5">
+              <div className="container grid grid-rows-3 md:grid-rows-1 md:grid-cols-3 gap-3 mt-5">
                 <div>
                   <p className="text-gray-500 mb-2 font-semibold">City</p>
                   <input
@@ -87,7 +88,7 @@ function Form(props) {
                     type="text"
                     placeholder="City"
                     onChange={handleInputChange}
-                    className="bg-gray-800 text-sm rounded-md mr-5 w-42 h-10 p-4"
+                    className="bg-gray-800 text-sm rounded-md mr-5 w-full h-10 p-1 lg:p-4"
                   />
                 </div>
                 <div>
@@ -98,7 +99,7 @@ function Form(props) {
                     type="number"
                     placeholder="Post Code"
                     onChange={handleInputChange}
-                    className="bg-gray-800 text-sm rounded-md mr-5 w-42 h-10 p-4"
+                    className="bg-gray-800 text-sm rounded-md mr-5 w-full h-10 p-1 lg:p-4"
                   />
                 </div>
                 <div>
@@ -109,7 +110,7 @@ function Form(props) {
                     type="text"
                     placeholder="Country"
                     onChange={handleInputChange}
-                    className="bg-gray-800 text-sm rounded-md w-42 h-10 p-4"
+                    className="bg-gray-800 text-sm rounded-md w-full h-10 p-1 lg:p-4"
                   />
                 </div>
               </div>
@@ -121,13 +122,13 @@ function Form(props) {
                   type="date"
                   placeholder="mm/dd/yyyy"
                   onChange={handleInputChange}
-                  className="bg-gray-800 text-sm rounded-md w-[615px] h-10 p-4"
+                  className="bg-gray-800 text-sm rounded-md   w-full  md:h-10 p-2 lg:p-4"
                 />
               </div>
-              <h1 className="text-indigo-600 w-20 mt-10 font-semibold">
+              <h1 className="text-indigo-600 w-20 mt-2 lg:mt-10 font-semibold">
                 Bill to
               </h1>
-              <div className="mt-5">
+              <div className="mt-2 lg:mt-5">
                 <p className="text-gray-500 mb-2 font-semibold">
                   Client's Name
                 </p>
@@ -137,10 +138,10 @@ function Form(props) {
                   type="text"
                   placeholder="Client's Name"
                   onChange={handleInputChange}
-                  className="bg-gray-800 text-sm mb-2 rounded-md w-[615px] h-10 p-4"
+                  className="bg-gray-800 text-sm mb-2 rounded-md  w-full h-6 md:h-10 p-2 lg:p-4"
                 />
               </div>
-              <div className="mt-5">
+              <div className="mt-2 md:mt-5">
                 <p className="text-gray-500 mb-2 font-semibold">
                   Client's Email
                 </p>
@@ -150,7 +151,7 @@ function Form(props) {
                   type="text"
                   placeholder="Client's Email"
                   onChange={handleInputChange}
-                  className="bg-gray-800 text-sm rounded-md w-[615px] h-10 p-4"
+                  className="bg-gray-800 text-sm rounded-md   w-full md:h-10 p-2 lg:p-4"
                 />
               </div>
               {open.map((_, index) => (
@@ -162,7 +163,7 @@ function Form(props) {
               ))}
               <button
                 onClick={openAdd}
-                className="bg-transparent text-indigo-600 text-md font-semibold hover:bg-white hover:scale-100 rounded-full w-[615px] h-10 mt-4"
+                className="bg-transparent text-indigo-600 text-md font-semibold hover:bg-white hover:scale-100 rounded-full w-72  md:w-[615px] h-6 md:h-10 mt-4"
               >
                 + Add new Item
               </button>
@@ -171,19 +172,19 @@ function Form(props) {
                   onClick={() => {
                     props.setOpen(false);
                   }}
-                  className="text-gray-800 font-semibold bg-gray-300 ml-16 w-32 h-12 rounded-full"
+                  className="text-gray-800 font-semibold bg-gray-300 md:ml-16 text-xs p-2 md:w-32 md:h-12 rounded-full"
                 >
                   Discord
                 </button>
 
-                <div>
+                <div className="flex flex-row">
                   <button
                     onClick={() => {
                       props.handleShowInvo();
                       props.setOpen(false);
-                      setList([...list, {...formData,type: "Draft"}]);
+                      setList([...list, { ...formData, type: "Draft" }]);
                       setFormData({
-                        id:0,
+                        id: 0,
                         address: "",
                         city: "",
                         code: "",
@@ -194,7 +195,7 @@ function Form(props) {
                         type: "Draft",
                       });
                     }}
-                    className="bg-gray-800 font-semibold text-white w-32 h-12 mr-2 rounded-full "
+                    className="bg-gray-800 font-semibold text-white text-xs p-2 md:w-32 md:h-12 mr-2 rounded-full "
                   >
                     Save as Draft
                   </button>
@@ -202,9 +203,9 @@ function Form(props) {
                     onClick={() => {
                       props.setOpen(false);
                       saveToLocalStorage();
-                      setList([...list, {...formData,type:'Save'}]);
+                      setList([...list, { ...formData, type: "Save" }]);
                       setFormData({
-                        id:0,
+                        id: 0,
                         address: "",
                         city: "",
                         code: "",
@@ -215,7 +216,7 @@ function Form(props) {
                         type: "Save",
                       });
                     }}
-                    className="bg-indigo-700 font-semibold text-white w-32 h-12 rounded-full"
+                    className="bg-indigo-700 font-semibold text-white text-xs p-2 md:w-32 md:h-12 rounded-full"
                   >
                     Save & Paid
                   </button>
