@@ -1,5 +1,4 @@
 
-
 function Add({i ,handleDelete }) {
     return (
         <div className="flex justify-between w-[500px] mb-4">
