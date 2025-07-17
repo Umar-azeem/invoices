@@ -1,4 +1,4 @@
- import "./App.css";
+  import "./App.css";
 import side from "./img/side.png";
 import dark from "./img/dark.svg";
 import man from "./img/man.jpg";
